@@ -1,3 +1,10 @@
+## What exists 
+
+* The ship moves left and right.
+* A single meteor comes down (goes in a loop) 
+* Pressing the space bar shoots a missile (missles keep looping, are 
+ never destroyed. 
+
 ## TODO 
 
 * Provide an  option in the UpDownPath to loop (or not to loop)
