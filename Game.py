@@ -1,5 +1,8 @@
 import pgzrun
 
+"""
+Code for lesson 
+"""
 import GameObjects as go
 
 WIDTH = 1200
