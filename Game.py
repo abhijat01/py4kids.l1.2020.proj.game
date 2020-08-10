@@ -18,7 +18,7 @@ world = go.World(actor_maker, WIDTH, HEIGHT)
 space_ship = world.make_game_actor("space_ship_005")
 center_x, center_y = world.get_center()
 space_ship.set_location(center_x, HEIGHT - 50)
-meteor = world.make_game_actor("space_meteor_001")
+meteor = world.make_game_actor("space_meteor_001_40p")
 world.add_actor(space_ship)
 world.add_actor(meteor)
 
