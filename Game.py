@@ -12,18 +12,25 @@ class ActorMaker:
         return Actor(img_name)
 
 actor_maker = ActorMaker()
-actor = actor_maker.make_actor("space_ship_005")
-actor.center = WIDTH/2, HEIGHT -50
+world = go.World(actor_maker, WIDTH, HEIGHT)
+space_ship = actor_maker.make_actor("space_ship_005")
+space_ship.center = WIDTH / 2, HEIGHT - 50
+space_ship_actor = go.GameActor(space_ship, world=world)
 meteor = actor_maker.make_actor("space_meteor_001_40p")
+meteor_actor = go.GameActor(meteor, world=world)
+
+world.add_actor(space_ship_actor)
+world.add_actor(meteor_actor)
+meteor_updater = go.UpDownPath(meteor_actor, 300, 0, coming_down=True)
+world.add_updater(meteor_updater)
 
 def draw():
     screen.clear()
-    actor.draw()
-    meteor.draw()
+    world.draw()
 
 
 def update():
-    pass
+    world.update()
 
 
 def on_key_down(key, mod):
