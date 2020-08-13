@@ -38,7 +38,6 @@ class LocationUpdater:
     def update(self):
         x,y = self.next_x(), self.next_y()
         self.ican_move.set_location(x,y)
-        #print("[TwoDParametricPath.update()] x,y = ({},{})".format(x,y))
 
     def next_x(self):
         self.x
@@ -57,9 +56,9 @@ class World:
         self.key_handlers = []
         self.location_updater = []
 
-    def make_game_actor(self, img_name):
+    def make_pg0_actor(self, img_name):
         act = self.actor_maker.make_actor(img_name)
-        return GameActor(act, self)
+        return act
 
     def get_center(self):
         return self.w/2, self.h/2
@@ -119,34 +118,28 @@ class UpDownPath(LocationUpdater):
         return self.y
 
 
-class CanMoveLeftRight:
-
-    def __init__(self, icanmove, left_key, right_key):
-        self.ican_move = icanmove
+class Ship(GameActor):
+    def __init__(self, actor, world, left_key, right_key, fire_key):
+        super().__init__(actor, world)
         self.left_key = left_key
         self.right_key = right_key
-
-    def on_key_down(self, key, mod):
-        if key == self.left_key:
-            self.ican_move.move_by(-5,0)
-        if key == self.right_key:
-            self.ican_move.move_by(5,0)
-
-
-class CanFire:
-    def __init__(self, firing_actor,   fire_key):
-        self.firing_actor = firing_actor
         self.fire_key = fire_key
 
     def on_key_down(self, key, mod):
-        if key == self.fire_key :
+        if key == self.left_key:
+            self.move_by(-5,0)
+        if key == self.right_key:
+            self.move_by(5,0)
+        if key == self.fire_key:
             self.fire()
 
     def fire(self):
-        world = self.firing_actor.world()
-        missile = world.make_game_actor("space_missile_009")
-        x,y = self.firing_actor.center()
+        world = self.my_world
+        missile_act = world.make_pg0_actor("space_missile_009")
+        missile = GameActor(missile_act, world)
+        x,y = self.center()
         y -=40
         go_up = UpDownPath(missile, x,y, False )
         world.add_actor(missile)
         world.add_location_updater(go_up)
+
