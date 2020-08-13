@@ -13,6 +13,7 @@ class ActorMaker:
     def make_actor(self, img_name):
         return Actor(img_name)
 
+
 actor_maker = ActorMaker()
 world = go.World(actor_maker, WIDTH, HEIGHT)
 space_ship = actor_maker.make_actor("space_ship_005")
@@ -29,7 +30,6 @@ for i in range(8):
 
 world.add_actor(space_ship_actor)
 world.add_key_listener(space_ship_actor)
-
 
 
 def draw():
