@@ -25,12 +25,26 @@ class World:
         self.actor_maker = actor_maker
         self.actors = []
         self.updaters = []
+        self.key_listeners = []
+
+    def add_key_listener(self, key_listener):
+        self.key_listeners.append(key_listener)
+
+    def remove_key_listener(self, key_listener):
+        self.key_listeners.remove(key_listener)
+
+    def on_key_down(self, key, mod):
+        for key_listener in self.key_listeners:
+            key_listener.on_key_down(key, mod)
 
     def add_updater(self, updater):
         self.updaters.append(updater)
 
     def remove_updater(self, updater):
         self.updaters.remove(updater)
+
+    def get_actor_maker(self):
+        return self.actor_maker
 
     def draw(self):
         for actor in self.actors:
@@ -45,6 +59,13 @@ class World:
 
     def remove_actor(self, actor):
         self.actors.remove(actor)
+
+    def add_meteor(self, x, y):
+        meteor = self.actor_maker.make_actor("space_meteor_001_40p")
+        meteor_actor = GameActor(meteor, world=self)
+        self.add_actor(meteor_actor)
+        meteor_updater = UpDownPath(meteor_actor, x, y, coming_down=True)
+        self.add_updater(meteor_updater)
 
 
 class LocationUpdater:
@@ -88,5 +109,30 @@ class UpDownPath(LocationUpdater):
             self.y = -100
 
         return self.y
+
+
+class Ship(GameActor):
+    def __init__(self, actor, world, left_key, right_key, fire_key):
+        super().__init__(actor, world)
+        self.left_key = left_key
+        self.right_key= right_key
+        self.fire_key = fire_key
+
+    def on_key_down(self, key, mod):
+        if key == self.left_key :
+            self.move_by(-5,0)
+        if key == self.right_key:
+            self.move_by(5,0)
+        if key == self.fire_key:
+            self.fire()
+
+    def fire(self):
+        actor_maker = self.my_world.get_actor_maker()
+        missile = actor_maker.make_actor("space_missile_009")
+        missile_actor = GameActor(missile, self.my_world)
+        self.my_world.add_actor(missile_actor)
+        x,y = self.actor.center
+        path = UpDownPath(missile_actor, x,y, coming_down=False)
+        self.my_world.add_updater(path)
 
 
