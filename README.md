@@ -6,17 +6,19 @@
  never destroyed. 
 
 ## TODO 
-
-* Provide an  option in the UpDownPath to loop (or not to loop)
-* Make the ship move as long as left or right key is pressed
-* Make a separate meteor class, then make it change its image after every "n" updates 
-* Make the meteor smaller
-* Detect when meteor hits either the missile or the ship 
+### First priority 
+* Make a separate meteor class.  
+* Detect when meteor hits either the missile or the ship. 
 * Destroy a meteor (remove from world as well) if missile hits it
 * Destropy the ship if meteor hits it 
-* Initialize with different number of meteors , and speed. Might be fun to find 
-different kinds of images for this.
-* Put restrictions on how my misslies can be fired at any given time - may be a counter for delay.
+* Make the ship move as long as left or right key is pressed
+* Put restrictions on how many misslies can be fired at any given time - may 
+be a counter for delay.
+### Extensions 
+* Initialize with different number of meteors , and speed and even images. 
 * Add shield etc. you can keep on adding more stuff to game play 
+* Make the metor change its image after every "n" updates 
 * Experiment with different kind of paths 
+* Provide an  option in the UpDownPath to loop (or not to loop)
+
 
